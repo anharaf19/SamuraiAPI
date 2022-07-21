@@ -9,11 +9,7 @@ namespace SamuraiAPI.Domain
     public class SwordType
     {   
         public int Id { get; set; }
-        public string TypeName { get; set; }
+        public string? TypeName { get; set; }
         public int SwordId { get; set; } 
-
-        
-
-        
     }
 }

@@ -94,20 +94,13 @@ namespace SamuraiAPI.Controllers
         {
             try
             {
-                //var newSword = new Sword();
-                //newSword.SwordName = swordCreateWithTypeDTO.SwordName;
-                //newSword.Weight = swordCreateWithTypeDTO.Weight;
-                
-                //var swordtype = new SwordType();
-                //swordtype.TypeName = swordCreateWithTypeDTO.SwordType.TypeName;
-
-                //newSword.SwordType.Add(swordtype);
-
-                var sword = _mapper.Map<Sword>(swordCreateWithTypeDTO);
+                var swordType = _mapper.Map<Sword>(swordCreateWithTypeDTO);
+                var result = await _swordDAL.AddSwordWithType(swordType);
+                var DTO = _mapper.Map<SwordReadWithTypeDTO>(result);
+                return Ok(DTO);
 
 
-                var result = await _swordDAL.AddSwordWithType(sword);
-                return Ok(result);
+
             }
             catch (Exception ex)
             {
@@ -116,7 +109,7 @@ namespace SamuraiAPI.Controllers
 
         }
 
-        
+
 
     }
 }

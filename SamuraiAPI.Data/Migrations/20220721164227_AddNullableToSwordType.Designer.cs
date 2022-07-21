@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SamuraiAPI.Data;
 
@@ -10,9 +11,10 @@ using SamuraiAPI.Data;
 namespace SamuraiAPI.Data.Migrations
 {
     [DbContext(typeof(SamuraiDbContext))]
-    partial class SamuraiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220721164227_AddNullableToSwordType")]
+    partial class AddNullableToSwordType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

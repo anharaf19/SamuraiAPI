@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SamuraiAPI.Data.DAL;
+using SamuraiAPI.DTO;
 using SamuraiAPI.Models;
 using SamuraiAPI.Services;
 
@@ -10,9 +13,11 @@ namespace SamuraiAPI.Controllers
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
+       
         public UsersController(IUserService userService)
         {
             _userService = userService;
+            
         }
 
         [HttpPost("authenticate")]
@@ -25,5 +30,11 @@ namespace SamuraiAPI.Controllers
 
             return Ok(response);
         }
+
+
+
+
     }
+
+
 }

@@ -22,8 +22,7 @@ namespace SamuraiAPI.Controllers
             _mapper = mapper;
         }
 
-        private static List<Samurai> samurais = new List<Samurai>();
-       
+        
         [HttpGet]
         public async Task<IEnumerable<DefaultSamuraiDTO>> Get()
         {
@@ -120,50 +119,50 @@ namespace SamuraiAPI.Controllers
             return samuraiDtos;
         }
 
-        //[HttpPost("SamuraiSword")]
-        //public async Task<ActionResult> PostWithSword(SamuraiCreateWithSwordDTO samuraiCreateWithSwordDTO)
-        //{
-        //    try
-        //    {
-        //        var samuraiSword = _mapper.Map<Samurai>(samuraiCreateWithSwordDTO);
-        //        var result = await _samuraiDAL.AddSamuraiWithSword(samuraiSword);
-        //        var DTO = _mapper.Map<SamuraiReadWithSwordDTO>(result);
-        //        return Ok(DTO);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
-
-        [HttpPost("AddSamuraiWithSword")]
-        
-        public async Task<ActionResult> AddSamuraiWithSword(SamuraiCreateWithSwordDTO samuraiCreateWithSwordDTO)
+        [HttpPost("SamuraiSword")]
+        public async Task<ActionResult> PostWithSword(SamuraiCreateWithSwordDTO samuraiCreateWithSwordDTO)
         {
             try
             {
-                var newSamurai = new Samurai();
-                newSamurai.Name = samuraiCreateWithSwordDTO.Name;
-
-
-                foreach(var sword in samuraiCreateWithSwordDTO.Swords)
-                {
-                    
-                    Sword s = new Sword();
-                    s.SwordName = sword.SwordName;
-                    s.Weight = sword.Weight;
-              
-                    newSamurai.Swords.Add(s);
-
-                }
-                var result = await _samuraiDAL.Insert(newSamurai);
-                return Ok(result);
+                var samuraiSword = _mapper.Map<Samurai>(samuraiCreateWithSwordDTO);
+                var result = await _samuraiDAL.AddSamuraiWithSword(samuraiSword);
+                var DTO = _mapper.Map<SamuraiReadWithSwordDTO>(result);
+                return Ok(DTO);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
+        //[HttpPost("AddSamuraiWithSword")]
+        
+        //public async Task<ActionResult> AddSamuraiWithSword(SamuraiCreateWithSwordDTO samuraiCreateWithSwordDTO)
+        //{
+        //    try
+        //    {
+        //        var newSamurai = new Samurai();
+        //        newSamurai.Name = samuraiCreateWithSwordDTO.Name;
+
+
+        //        foreach(var sword in samuraiCreateWithSwordDTO.Swords)
+        //        {
+                    
+        //            Sword s = new Sword();
+        //            s.SwordName = sword.SwordName;
+        //            s.Weight = sword.Weight;
+              
+        //            newSamurai.Swords.Add(s);
+
+        //        }
+        //        var result = await _samuraiDAL.Insert(newSamurai);
+        //        return Ok(result);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
     }
 }

@@ -2,7 +2,6 @@
 {
     public class SwordCreateWithTypeDTO
     {
-        public int Id { get; set; }
         public string SwordName { get; set; }
         public int Weight { get; set; }
         public int SamuraiId

@@ -4,6 +4,7 @@ using SamuraiAPI.Data.DAL;
 using SamuraiAPI.Helpers;
 using SamuraiAPI.Services;
 using System.Text.Json.Serialization;
+using UsersAPI.Data.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ISamurai, SamuraiDAL>();
 builder.Services.AddScoped<ISword, SwordDAL>();
 builder.Services.AddScoped<IElement, ElementDAL>();
+builder.Services.AddScoped<IUser, UserDAL>();
 
 // configure strongly typed settings object
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));

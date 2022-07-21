@@ -9,6 +9,7 @@ namespace SamuraiAPI.Profiles
         public SamuraiProfile()
         {
             CreateMap<Samurai, DefaultSamuraiDTO>();
+            CreateMap<SwordCreateDTO, Sword>();
             CreateMap<DefaultSamuraiDTO, Samurai>();
 
             CreateMap<SamuraiCreateWithSwordDTO, Samurai>().ReverseMap(); 
