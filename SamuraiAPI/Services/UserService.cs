@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-
-using SamuraiAPI.Models;
+using SamuraiAPI.Data;
 using SamuraiAPI.Helpers;
+using SamuraiAPI.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -23,15 +23,26 @@ namespace SamuraiAPI.Services
         };
 
         private readonly AppSettings _appSettings;
+        private readonly SamuraiDbContext _context;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public UserService(IOptions<AppSettings> appSettings, SamuraiDbContext context)
         {
             _appSettings = appSettings.Value;
+            _context = context;
         }
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model)
         {
-            var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+            var users = _context.Users.ToList();
+            List<User> users2 = new List<User>();
+            foreach (var user1 in users)
+            {
+                users2.Add(new User { Id = user1.Id, FirstName = user1.FirstName, LastName = user1.LastName, Username = user1.Username, Password = user1.Password });
+            }
+
+            var user = users2.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+            //var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+
 
             // return null if user not found
             if (user == null) return null;

@@ -12,6 +12,9 @@ namespace SamuraiAPI.Data.DAL
         Task<IEnumerable<Samurai>> GetByName(string name);
 
         Task<Samurai> AddSamuraiWithSword(Samurai obj);
-        
+
+        Task<IEnumerable<Samurai>> GetAllSamurai();
+
+
     }
 }

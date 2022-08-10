@@ -12,5 +12,12 @@ namespace SamuraiAPI.Data.DAL
         Task<IEnumerable<Sword>> GetByName(string name);
 
         Task<Sword> AddSwordWithType(Sword sword);
+
+        Task<IEnumerable<Sword>> GetSwordWithType(int pageNumber);
+
+        Task<SwordElement> AddElementToExistingSword(SwordElement swordElement);
+
+        Task DeleteElementFromSword(int Id);
+
     }
 }

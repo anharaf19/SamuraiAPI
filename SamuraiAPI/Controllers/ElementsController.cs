@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using SamuraiAPI.Data.DAL;
 using SamuraiAPI.Domain;
 using SamuraiAPI.DTO;
+using SamuraiAPI.Helpers;
 
 namespace SamuraiAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ElementsController : ControllerBase
@@ -27,6 +29,21 @@ namespace SamuraiAPI.Controllers
             var elementDTO = _mapper.Map<IEnumerable<DefaultElementDTO>>(results);
 
             return elementDTO;
+        }
+        [HttpGet("ByName")]
+        public async Task<IEnumerable<DefaultElementDTO>> GetByName(string name)
+        {
+            List<DefaultElementDTO> samuraiDtos = new List<DefaultElementDTO>();
+            var results = await _elementDAL.GetByName(name);
+            foreach (var result in results)
+            {
+                samuraiDtos.Add(new DefaultElementDTO
+                {
+                    Id = result.Id,
+                    ElementName = result.ElementName
+                });
+            }
+            return samuraiDtos;
         }
         [HttpGet("{id}")]
         public async Task<DefaultElementDTO> Get(int id)
@@ -85,6 +102,26 @@ namespace SamuraiAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+        [HttpPost("AddSwordToExistingElement")]
+
+        public async Task<ActionResult> AddSwordToExistingElement(SwordElementDTO swordElementDTO)
+        {
+            try
+            {
+                var swordelement = _mapper.Map<SwordElement>(swordElementDTO);
+                var result = await _elementDAL.AddSwordToExistingElement(swordelement);
+                var DTO = _mapper.Map<SwordElementDTO>(result);
+                return Ok(DTO);
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
     }
 }

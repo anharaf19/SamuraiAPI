@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using SamuraiAPI.Data.DAL;
 using SamuraiAPI.Domain;
 using SamuraiAPI.DTO;
+using SamuraiAPI.Helpers;
 using UsersAPI.Data.DAL;
 
 namespace SamuraiAPI.Controllers
 {
+
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserCRUDController : ControllerBase

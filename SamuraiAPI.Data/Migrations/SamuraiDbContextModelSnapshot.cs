@@ -33,7 +33,7 @@ namespace SamuraiAPI.Data.Migrations
 
                     b.HasIndex("SwordsId");
 
-                    b.ToTable("ElementSword");
+                    b.ToTable("ElementSword", (string)null);
                 });
 
             modelBuilder.Entity("SamuraiAPI.Domain.Element", b =>
@@ -50,7 +50,7 @@ namespace SamuraiAPI.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Elements");
+                    b.ToTable("Elements", (string)null);
                 });
 
             modelBuilder.Entity("SamuraiAPI.Domain.Samurai", b =>
@@ -67,7 +67,7 @@ namespace SamuraiAPI.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Samurais");
+                    b.ToTable("Samurais", (string)null);
                 });
 
             modelBuilder.Entity("SamuraiAPI.Domain.Sword", b =>
@@ -92,7 +92,7 @@ namespace SamuraiAPI.Data.Migrations
 
                     b.HasIndex("SamuraiId");
 
-                    b.ToTable("Swords");
+                    b.ToTable("Swords", (string)null);
                 });
 
             modelBuilder.Entity("SamuraiAPI.Domain.SwordElement", b =>
@@ -125,7 +125,7 @@ namespace SamuraiAPI.Data.Migrations
                     b.HasIndex("SwordId")
                         .IsUnique();
 
-                    b.ToTable("SwordTypes");
+                    b.ToTable("SwordTypes", (string)null);
                 });
 
             modelBuilder.Entity("SamuraiAPI.Domain.User", b =>
@@ -154,7 +154,7 @@ namespace SamuraiAPI.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ElementSword", b =>

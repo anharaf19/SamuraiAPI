@@ -16,6 +16,20 @@ namespace SamuraiAPI.Data.DAL
             _context = context;
         }
 
+        public async Task<SwordElement> AddElementToExistingSword(SwordElement swordElement)
+        {
+            var s = _context.Swords.FirstOrDefault(s => s.Id == swordElement.SwordsId);
+            if (s != null) { 
+            _context.SwordElements.Add(swordElement);
+            await _context.SaveChangesAsync();
+            }
+            else
+            {
+                Console.WriteLine("Error");
+            }
+            return swordElement;
+        }
+
         public async Task<Sword> AddSwordWithType(Sword sword)
         {
             _context.Swords.Add(sword);
@@ -31,6 +45,22 @@ namespace SamuraiAPI.Data.DAL
                 if (deleteSword == null)
                     throw new Exception($"Data sword dengan id {id} tidak ditemukan");
                 _context.Swords.Remove(deleteSword);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+        }
+
+        public async Task DeleteElementFromSword(int id)
+        {
+            try
+            {
+                var deleteSword = await _context.SwordElements.Where(s => s.SwordsId == id).ToListAsync();
+                if (deleteSword == null)
+                    throw new Exception($"Data sword dengan id {id} tidak ditemukan");
+                _context.SwordElements.RemoveRange(deleteSword);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -57,6 +87,21 @@ namespace SamuraiAPI.Data.DAL
             var swords = await _context.Swords.Where(s => s.SwordName.Contains(name))
                .OrderBy(s => s.SwordName).ToListAsync();
             return swords;
+        }
+
+      
+
+        public async Task<IEnumerable<Sword>> GetSwordWithType(int pageNumber)
+        {
+            var s = await _context.Swords.Include(s => s.SwordType)
+               .OrderBy(s => s.SwordName).AsNoTracking().ToListAsync();
+
+
+            int numberOfObjectsPerPage = 10;
+            var queryResultPage = s
+              .Skip(numberOfObjectsPerPage * (pageNumber - 1))
+              .Take(numberOfObjectsPerPage);
+            return queryResultPage;
         }
 
         public async Task<Sword> Insert(Sword obj)

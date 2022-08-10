@@ -8,7 +8,7 @@ namespace SamuraiAPI.Domain
 {
     public class SwordElement
     {
-        public int SwordId { get; set; }
-        public int ElementId { get; set; }
+        public int SwordsId { get; set; }
+        public int ElementsId { get; set; }
     }
 }

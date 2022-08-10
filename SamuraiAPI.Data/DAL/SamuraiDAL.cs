@@ -51,6 +51,26 @@ namespace SamuraiAPI.Data.DAL
             return results;
         }
 
+        public async Task<IEnumerable<Samurai>> GetAllSamurai()
+        {
+            var results = await _context.Samurais.Include(s => s.Swords)
+              .ThenInclude(e => e.Elements).Include(t=>t.Swords).ThenInclude(el=>el.SwordType)
+              .OrderBy(s => s.Name).AsNoTracking().ToListAsync();
+
+
+            
+            return results;
+
+            //var results = await (from s in _context.Samurais 
+            //                     join sw in _context.Swords on s.Id equals sw.SamuraiId
+            //                     join st in _context.SwordTypes on sw.Id equals st.SwordId
+            //                     join se in _context.SwordElements on sw.Id equals se.SwordsId
+            //                     join e in _context.Elements on se.ElementsId equals e.Id orderby s.Name select new {s,sw,st,se,e}).ToListAsync();
+
+            //return results;
+
+        }
+
         public async Task<Samurai> GetById(int id)
         {
             var result = await _context.Samurais.FirstOrDefaultAsync(s => s.Id == id);

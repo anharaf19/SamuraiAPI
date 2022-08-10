@@ -15,6 +15,14 @@ namespace SamuraiAPI.Data.DAL
         {
             _context = context;
         }
+
+        public async Task<SwordElement> AddSwordToExistingElement(SwordElement swordElement)
+        {
+            _context.SwordElements.Add(swordElement);
+            await _context.SaveChangesAsync();
+            return swordElement;
+        }
+
         public async Task Delete(int id)
         {
             try

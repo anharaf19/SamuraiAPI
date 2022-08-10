@@ -10,5 +10,7 @@ namespace SamuraiAPI.Data.DAL
     public interface IElement : ICrud<Element>
     {
         Task<IEnumerable<Element>> GetByName(string name);
+
+        Task<SwordElement> AddSwordToExistingElement(SwordElement swordElement);
     }
 }

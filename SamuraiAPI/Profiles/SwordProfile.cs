@@ -11,13 +11,12 @@ namespace SamuraiAPI.Profiles
             CreateMap<Sword, DefaultSwordDTO>();
             CreateMap<Sword, SwordDTO>();
             CreateMap<DefaultSwordDTO, Sword>();
-            CreateMap<Sword, SwordReadTypeDTO>();
-            CreateMap<Sword, SwordReadWithTypeDTO>();
-
             CreateMap<SwordTypeDTO, SwordType>();
             CreateMap<SwordCreateWithTypeDTO, Sword>();
-
-
+            CreateMap<Sword, SwordReadWithTypeDTO>();
+            CreateMap<SwordType, SwordReadTypeDTO>();
+            CreateMap<SwordElementDTO, SwordElement>();
+            CreateMap<SwordElement, SwordElementDTO>();
         }
     }
 }

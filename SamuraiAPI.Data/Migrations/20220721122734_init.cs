@@ -56,23 +56,24 @@ namespace SamuraiAPI.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ElementSword",
+                name: "SwordElements",
                 columns: table => new
                 {
-                    ElementsId = table.Column<int>(type: "int", nullable: false),
-                    SwordsId = table.Column<int>(type: "int", nullable: false)
+                    SwordsId = table.Column<int>(type: "int", nullable: false),
+                    ElementsId = table.Column<int>(type: "int", nullable: false)
+                    
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ElementSword", x => new { x.ElementsId, x.SwordsId });
+                    table.PrimaryKey("PK_SwordElements", x => new { x.ElementsId, x.SwordsId });
                     table.ForeignKey(
-                        name: "FK_ElementSword_Elements_ElementsId",
+                        name: "FK_SwordElement_Elements_ElementsId",
                         column: x => x.ElementsId,
                         principalTable: "Elements",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ElementSword_Swords_SwordsId",
+                        name: "FK_SwordElement_Swords_SwordsId",
                         column: x => x.SwordsId,
                         principalTable: "Swords",
                         principalColumn: "Id",
@@ -100,8 +101,8 @@ namespace SamuraiAPI.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ElementSword_SwordsId",
-                table: "ElementSword",
+                name: "IX_SwordElements_SwordsId",
+                table: "SwordElements",
                 column: "SwordsId");
 
             migrationBuilder.CreateIndex(
@@ -119,7 +120,7 @@ namespace SamuraiAPI.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ElementSword");
+                name: "SwordElements");
 
             migrationBuilder.DropTable(
                 name: "SwordTypes");

@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using SamuraiAPI.Data.DAL;
 using SamuraiAPI.Domain;
 using SamuraiAPI.DTO;
+using SamuraiAPI.Helpers;
 
 namespace SamuraiAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SwordsController : ControllerBase
@@ -108,8 +110,66 @@ namespace SamuraiAPI.Controllers
             }
 
         }
+        [HttpGet("GetSwordWithType")]
+        public async Task<IEnumerable<SwordReadWithTypeDTO>> GetSwordWithType(int pageNumber)
+        {
+
+            var results = await _swordDAL.GetSwordWithType(pageNumber);
+            var swordDTO = _mapper.Map<IEnumerable<SwordReadWithTypeDTO>>(results);
+
+            return swordDTO;
+        }
+
+        [HttpPost("AddElementToExistingSword")]
+
+        public async Task<ActionResult> AddElementToExistingSword(SwordElementDTO swordElementDTO)
+        {
+            try
+            {
+                   
+
+                    var swordelement = _mapper.Map<SwordElement>(swordElementDTO);
+                    var result = await _swordDAL.AddElementToExistingSword(swordelement);
+                    var DTO = _mapper.Map<SwordElementDTO>(result);
+                    return Ok(DTO);
 
 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
+        }
+        [HttpDelete("DeleteElementFromSword/{id}")]
+        public async Task<ActionResult> DeleteElementFromSword(int id)
+        {
+            try
+            {
+                await _swordDAL.DeleteElementFromSword(id);
+                return Ok($"Data sword dengan id {id} berhasil didelete");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("ByName")]
+        public async Task<IEnumerable<DefaultSwordDTO>> GetByName(string name)
+        {
+            List<DefaultSwordDTO> samuraiDtos = new List<DefaultSwordDTO>();
+            var results = await _swordDAL.GetByName(name);
+            foreach (var result in results)
+            {
+                samuraiDtos.Add(new DefaultSwordDTO
+                {
+                    Id = result.Id,
+                    SwordName = result.SwordName,
+                    Weight = result.Weight
+                    
+                });
+            }
+            return samuraiDtos;
+        }
     }
 }

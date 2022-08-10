@@ -29,6 +29,7 @@ namespace SamuraiAPI.Data
 
         public DbSet<Element> Elements { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<SwordElement> SwordElements { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SamuraiDB")
@@ -37,7 +38,12 @@ namespace SamuraiAPI.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-             modelBuilder.Entity<SwordElement>().HasNoKey().ToView("SwordElemets");
+
+            modelBuilder.Entity<Sword>().HasMany(s => s.Elements)
+            .WithMany(b => b.Swords)
+            .UsingEntity<SwordElement>(bs => bs.HasOne<Element>().WithMany(),
+            bs => bs.HasOne<Sword>().WithMany());
+
             
         }
 

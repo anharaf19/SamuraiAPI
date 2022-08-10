@@ -119,7 +119,7 @@ namespace SamuraiAPI.Controllers
             return samuraiDtos;
         }
 
-        [HttpPost("SamuraiSword")]
+        [HttpPost("AddSamuraiWithSword")]
         public async Task<ActionResult> PostWithSword(SamuraiCreateWithSwordDTO samuraiCreateWithSwordDTO)
         {
             try
@@ -136,7 +136,7 @@ namespace SamuraiAPI.Controllers
         }
 
         //[HttpPost("AddSamuraiWithSword")]
-        
+
         //public async Task<ActionResult> AddSamuraiWithSword(SamuraiCreateWithSwordDTO samuraiCreateWithSwordDTO)
         //{
         //    try
@@ -147,11 +147,11 @@ namespace SamuraiAPI.Controllers
 
         //        foreach(var sword in samuraiCreateWithSwordDTO.Swords)
         //        {
-                    
+
         //            Sword s = new Sword();
         //            s.SwordName = sword.SwordName;
         //            s.Weight = sword.Weight;
-              
+
         //            newSamurai.Swords.Add(s);
 
         //        }
@@ -163,6 +163,15 @@ namespace SamuraiAPI.Controllers
         //        return BadRequest(ex.Message);
         //    }
         //}
+
+        [HttpGet("AllSamurai")]
+        public async Task<IEnumerable<Samurai>> GetAllSamurai()
+        {
+            var results = await _samuraiDAL.GetAllSamurai();
+            var samuraiDTO = _mapper.Map<IEnumerable<Samurai>>(results);
+
+            return samuraiDTO;
+        }
 
     }
 }
